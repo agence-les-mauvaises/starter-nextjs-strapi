@@ -7,7 +7,9 @@
   "license": "MIT",
   "scripts": {
     "dev": "concurrently -c \"green,blue\" -n \"front,api\" \"cd next && yarn dev\" \"cd strapi && yarn develop\"",
-    "setup": "cd strapi && yarn && yarn seed && cd ../next && yarn && yarn build"
+    "setup": "cd strapi && yarn && yarn seed && cd ../next && yarn && yarn build",
+    "build": "concurrently -c \"green,blue\" -n \"front,api\" \"cd next && yarn build\" \"cd strapi && yarn build\"",
+    "start": "concurrently -c \"green,blue\" -n \"front,api\" \"cd next && yarn start\" \"cd strapi && yarn start\""
   },
   "dependencies": {
     "concurrently": "^9.0.1"

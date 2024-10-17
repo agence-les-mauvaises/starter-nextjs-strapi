@@ -27,6 +27,8 @@ export default async function Page({ params }: { params: { locale: string, slug:
     true
   );
 
+  console.log(pageData)
+
   return (
     <PageContent pageData={pageData} />
   );
