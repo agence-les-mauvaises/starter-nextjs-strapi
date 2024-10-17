@@ -1,0 +1,22 @@
+{
+    "ui": "tui",
+    "$schema": "https://turbo.build/schema.json",
+    "tasks": {
+        "setup": {
+            "dependsOn": ["seed"]
+        },
+      "build": {
+        "dependsOn": ["^build"],
+        "outputs": [".next/**", "!.next/cache/**"]
+      },
+      "check-types": {
+        "dependsOn": ["^check-types"]
+      },
+      "dev": {
+        "persistent": true,
+        "cache": false
+      },
+      "seed": {
+        }
+    }
+  }

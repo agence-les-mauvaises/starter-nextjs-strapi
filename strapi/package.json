@@ -5,12 +5,14 @@
   "description": "A Strapi application",
   "scripts": {
     "develop": "strapi develop",
+    "dev": "strapi develop",
     "start": "strapi start",
     "build": "strapi build",
     "strapi": "strapi",
     "deploy": "strapi deploy",
-    "seed": "strapi import -f ./data/export_20241002155953.tar.gz",
-    "postinstall": "node ./scripts/updateUuid.js"
+    "seed": "strapi import -f ./data/export_20241002155953.tar.gz --force",
+    "postinstall": "node ./scripts/updateUuid.js",
+    "check-types": "tsc --noEmit"
   },
   "devDependencies": {
     "@types/node": "^20",

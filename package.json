@@ -1,17 +1,26 @@
 {
+  "private": true,
   "name": "starter-nextjs-strapi",
   "version": "1.0.0",
   "main": "index.js",
   "repository": "git@github.com:agence-les-mauvaises/starter-nextjs-strapi.git",
   "author": "les-mauvaises <contact@les-mauvaises.fr>",
   "license": "MIT",
+  "workspaces": [
+    "next",
+    "strapi"
+  ],
   "scripts": {
-    "dev": "concurrently -c \"green,blue\" -n \"front,api\" \"cd next && yarn dev\" \"cd strapi && yarn develop\"",
-    "setup": "cd strapi && yarn && yarn seed && cd ../next && yarn && yarn build",
-    "build": "concurrently -c \"green,blue\" -n \"front,api\" \"cd next && yarn build\" \"cd strapi && yarn build\"",
-    "start": "concurrently -c \"green,blue\" -n \"front,api\" \"cd next && yarn start\" \"cd strapi && yarn start\""
+    "dev": "yarn turbo dev",
+    "setup": "cd strapi && yarn turbo setup && yarn turbo build",
+    "build": "yarn turbo build",
+    "start": "yarn turbo start"
   },
   "dependencies": {
     "concurrently": "^9.0.1"
-  }
+  },
+  "devDependencies": {
+    "turbo": "^2.1.3"
+  },
+  "packageManager": "yarn@1.22.22"
 }
