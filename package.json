@@ -1,0 +1,15 @@
+{
+  "name": "starter-nextjs-strapi",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@github.com:agence-les-mauvaises/starter-nextjs-strapi.git",
+  "author": "les-mauvaises <contact@les-mauvaises.fr>",
+  "license": "MIT",
+  "scripts": {
+    "dev": "concurrently -c \"green,blue\" -n \"front,api\" \"cd next && yarn dev\" \"cd strapi && yarn develop\"",
+    "setup": "cd strapi && yarn && yarn seed && cd ../next && yarn && yarn build"
+  },
+  "dependencies": {
+    "concurrently": "^9.0.1"
+  }
+}

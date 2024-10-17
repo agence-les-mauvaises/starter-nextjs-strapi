@@ -1,0 +1,45 @@
+{
+  "name": "strapi",
+  "private": true,
+  "version": "0.1.0",
+  "description": "A Strapi application",
+  "scripts": {
+    "develop": "strapi develop",
+    "start": "strapi start",
+    "build": "strapi build",
+    "strapi": "strapi",
+    "deploy": "strapi deploy",
+    "seed": "strapi import -f ./data/export_20241002155953.tar.gz",
+    "postinstall": "node ./scripts/updateUuid.js"
+  },
+  "devDependencies": {
+    "@types/node": "^20",
+    "@types/react": "^18",
+    "@types/react-dom": "^18",
+    "typescript": "^5"
+  },
+  "dependencies": {
+    "@strapi/plugin-cloud": "5.0.1",
+    "@strapi/plugin-users-permissions": "5.0.1",
+    "@strapi/strapi": "5.0.1",
+    "better-sqlite3": "9.4.3",
+    "patch-package": "^8.0.0",
+    "pluralize": "^8.0.0",
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0",
+    "react-router-dom": "^6.0.0",
+    "styled-components": "^6.0.0",
+    "uuid": "^10.0.0"
+  },
+  "author": {
+    "name": "A Strapi developer"
+  },
+  "strapi": {
+    "uuid": "LAUNCHPAD-LOCAL-760951ea-9fef-4b24-ba4e-83c31b3ecd67"
+  },
+  "engines": {
+    "node": ">=18.0.0 <=20.x.x",
+    "npm": ">=6.0.0"
+  },
+  "license": "MIT"
+}
