@@ -9,7 +9,7 @@ export async function generateMetadata({
 }: {
   params: { locale: string; slug: string };
 }): Promise<Metadata> {
-  const pageData = await fetchContentType(
+  const pageData = await fetchContentType<any>(
     'pages',
     `filters[slug][$eq]=${params.slug}&filters[locale][$eq]=${params.locale}&populate=seo.metaImage`,
     true
