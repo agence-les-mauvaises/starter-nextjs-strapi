@@ -5,6 +5,7 @@ import { i18n } from '@/config/i18n.config'
 
 import { match as matchLocale } from '@formatjs/intl-localematcher'
 import Negotiator from 'negotiator'
+import fetchContentType from './lib/strapi/fetchContentType'
 
 function getLocale(request: NextRequest): string | undefined {
   const negotiatorHeaders: Record<string, string> = {}
@@ -18,11 +19,15 @@ function getLocale(request: NextRequest): string | undefined {
   return locale
 }
 
-export function middleware(request: NextRequest) {
+export async function middleware(request: NextRequest) {
   const pathname = request.nextUrl.pathname
   const pathnameIsMissingLocale = i18n.locales.every(
     locale => !pathname.startsWith(`/${locale}/`) && pathname !== `/${locale}`
   )
+
+  console.log(await fetchContentType('pages', 'filters[slug][$eq]=homepage&filters[locale][$eq]=${params.locale}&populate=seo.metaImage'))
+
+
 
   // Redirect if there is no locale
   if (pathnameIsMissingLocale) {

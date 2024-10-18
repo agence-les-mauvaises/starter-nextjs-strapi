@@ -20,10 +20,11 @@ const DynamicZoneManager: React.FC<Props> = ({ dynamicZone, locale }) => {
       {
         dynamicZone.map((componentData) => {
           const componentName = componentData.__component.split('.').pop()!
-          const Component = dynamic<{locale: typeof locale}>(() => import(`./${componentName}`).then(mod => mod.default || mod[capitalize(componentName)]) || (() => {
-            console.warn(`No component found for: ${componentData.__component}`);
+          const Component = dynamic<{locale: typeof locale}>(() => import(`./${componentName}`).then(mod => {
+            return mod instanceof Function ? mod : mod.default || mod[componentName.split('-').map(capitalize).join('')] || mod[componentName.split('-').map(n => n.toUpperCase()).join('')] || (() => {
+            console.warn(`No component found for ${componentData.__component} in ${mod} with property default or ${componentName.split('-').map(capitalize).join('')} or ${componentName.split('-').map(n => n.toUpperCase()).join('')}`);
             return null;
-          }))
+          })}))
           return <Component key={componentData.id} {...componentData} locale={locale} />;
         })}
     </div>

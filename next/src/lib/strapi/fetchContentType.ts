@@ -15,8 +15,6 @@ interface StrapiResponse<T extends StrapiData | StrapiData[] = StrapiData | Stra
   data: T;
 }
 
-import Strapi from "strapi-sdk-js"
-
 export function spreadStrapiData<T extends StrapiData | StrapiData[]>(data: StrapiResponse<T>): StrapiData | null {
   if (Array.isArray(data.data) && data.data.length > 0) {
     return data.data[0];
@@ -33,13 +31,19 @@ export default async function fetchContentType<T extends StrapiData, C extends s
   spreadData?: S
 ): Promise<S extends true ? T | T[] : StrapiResponse<T | T[]>> {
   try {
-    // Construct the full URL for the API request
-    const url = new URL(`api/${contentType}`, process.env.NEXT_PUBLIC_API_URL);
+   // Construct the full URL for the API request
+   const url = new URL(`api/${contentType}`, process.env.NEXT_PUBLIC_API_URL);
 
-    // Perform the fetch request with the provided query parameters
-    const jsonData =await new Strapi({
-      url: process.env.NEXT_PUBLIC_API_URL
-    }).find<T | T[]>(contentType, Object.fromEntries(new URLSearchParams(params).entries()))
+   // Perform the fetch request with the provided query parameters
+   const response = await fetch(`${url.href}?${params}`, {
+     method: 'GET',
+     cache: 'no-store',
+   });
+
+   if (!response.ok) {
+     throw new Error(`Failed to fetch data from Strapi (url=${url.toString()}, status=${response.status})`);
+   }
+   const jsonData: StrapiResponse = await response.json();
     return (spreadData ? spreadStrapiData(jsonData) as T | T[]  : jsonData) as S extends true ? T | T[] : StrapiResponse<T | T[]>
   } catch (error) {
     // Log any errors that occur during the fetch process

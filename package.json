@@ -11,10 +11,10 @@
     "strapi"
   ],
   "scripts": {
-    "dev": "yarn turbo dev",
-    "setup": "cd strapi && yarn turbo setup && yarn turbo build",
-    "build": "yarn turbo build",
-    "start": "yarn turbo start"
+    "dev": "npx turbo dev",
+    "setup": "cd strapi && npx turbo setup && npx turbo build",
+    "build": "npx turbo build",
+    "start": "npx turbo start"
   },
   "dependencies": {
     "concurrently": "^9.0.1"
