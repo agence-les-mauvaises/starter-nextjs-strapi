@@ -25,11 +25,19 @@ export function spreadStrapiData<T extends StrapiData | StrapiData[]>(data: Stra
   return null
 }
 
-export default async function fetchContentType<T extends StrapiData, C extends string = string, P extends string = string, S extends boolean = boolean>(
+export function ensureIsSingle<T extends StrapiData | StrapiData[]>(data: T): T extends unknown[] ? T[number] : T {
+  return data as T extends unknown[] ? T[number] : T
+}
+
+export function ensureIsCollection<T extends StrapiData | StrapiData[]>(data: T): T extends unknown[] ? T : T[] {
+  return data as T extends unknown[] ? T : T[]
+}
+
+export default async function fetchContentType<T extends StrapiData, C extends string = string, P extends string = string, S extends boolean = boolean, Single extends boolean = boolean>(
   contentType: C,
   params: P,
-  spreadData?: S
-): Promise<S extends true ? T | T[] : StrapiResponse<T | T[]>> {
+  spreadData?: S,
+): Promise<S extends true ? Single extends true ? T : T[] : StrapiResponse<Single extends true ? T : T[]>> {
   try {
    // Construct the full URL for the API request
    const url = new URL(`api/${contentType}`, process.env.NEXT_PUBLIC_API_URL);
@@ -44,7 +52,7 @@ export default async function fetchContentType<T extends StrapiData, C extends s
      throw new Error(`Failed to fetch data from Strapi (url=${url.toString()}, status=${response.status})`);
    }
    const jsonData: StrapiResponse = await response.json();
-    return (spreadData ? spreadStrapiData(jsonData) as T | T[]  : jsonData) as S extends true ? T | T[] : StrapiResponse<T | T[]>
+    return (spreadData ? spreadStrapiData(jsonData) as T | T[]  : jsonData) as S extends true ? Single extends true ? T : T[] : StrapiResponse<Single extends true ? T : T[]>
   } catch (error) {
     // Log any errors that occur during the fetch process
     console.error('FetchContentTypeError', error);

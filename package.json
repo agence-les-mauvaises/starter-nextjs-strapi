@@ -17,7 +17,8 @@
     "start": "npx turbo start"
   },
   "dependencies": {
-    "concurrently": "^9.0.1"
+    "concurrently": "^9.0.1",
+    "wait-port": "^1.1.0"
   },
   "devDependencies": {
     "turbo": "^2.1.3"

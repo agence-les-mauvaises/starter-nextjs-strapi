@@ -1,6 +1,6 @@
 import { strapiImage } from '../strapi/strapiImage';
 
-export function generateMetadataObject(seo: any) {
+export function generateMetadataObject(seo?: any) {
   return {
     title: seo?.metaTitle || 'Default Title', // Fallback to 'Default Title' if title is not provided
     description: seo?.metaDescription || 'Default Description', // Fallback to 'Default Description'

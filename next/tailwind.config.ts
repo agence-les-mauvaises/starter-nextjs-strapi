@@ -90,6 +90,7 @@ const config: Config = {
       );
     },
   ],
+  safelist: ['dark']
 };
 
 function addVariablesForColors({ addBase, theme }: any) {

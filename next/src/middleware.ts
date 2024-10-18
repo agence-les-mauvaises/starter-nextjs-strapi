@@ -1,47 +1,17 @@
-import { NextResponse } from 'next/server'
-import type { NextRequest } from 'next/server'
+// middleware.ts
 
-import { i18n } from '@/config/i18n.config'
+import { stackMiddlewares } from './middlewares/utils/stackMiddlewares'
+import { withHeaders } from './middlewares/WithHeaders'
+import * as HealthCheckMiddleware from './middlewares/WithHealthCheck'
+import * as EnvMiddleware from './middlewares/WithEnv'
+import * as WithInternalization from "./middlewares/WithInternalization";
+import { Middleware } from './middlewares/utils/types'
 
-import { match as matchLocale } from '@formatjs/intl-localematcher'
-import Negotiator from 'negotiator'
-import fetchContentType from './lib/strapi/fetchContentType'
+const middlewares = [
+  EnvMiddleware,
+  HealthCheckMiddleware,
+  WithInternalization,
+  withHeaders,
+] satisfies Middleware[]
 
-function getLocale(request: NextRequest): string | undefined {
-  const negotiatorHeaders: Record<string, string> = {}
-  request.headers.forEach((value, key) => (negotiatorHeaders[key] = value))
-
-  // @ts-ignore locales are readonly
-  const locales: string[] = i18n.locales
-  const languages = new Negotiator({ headers: negotiatorHeaders }).languages()
-
-  const locale = matchLocale(languages, locales, i18n.defaultLocale)
-  return locale
-}
-
-export async function middleware(request: NextRequest) {
-  const pathname = request.nextUrl.pathname
-  const pathnameIsMissingLocale = i18n.locales.every(
-    locale => !pathname.startsWith(`/${locale}/`) && pathname !== `/${locale}`
-  )
-
-  console.log(await fetchContentType('pages', 'filters[slug][$eq]=homepage&filters[locale][$eq]=${params.locale}&populate=seo.metaImage'))
-
-
-
-  // Redirect if there is no locale
-  if (pathnameIsMissingLocale) {
-    const locale = getLocale(request)
-    return NextResponse.redirect(
-      new URL(
-        `/${locale}${pathname.startsWith('/') ? '' : '/'}${pathname}`,
-        request.url
-      )
-    )
-  }
-}
-
-export const config = {
-  // Matcher ignoring `/_next/` and `/api/`
-  matcher: ['/((?!api|_next/static|_next/image|favicon.ico).*)']
-}
+export default stackMiddlewares(middlewares)

@@ -9,6 +9,7 @@ const publicEnv = {
 const env = {
     ...publicEnv,
     PREVIEW_SECRET: zod.string(),
+    NODE_ENV: zod.string(),
 }
 
 export const envSchemaPublic = zod.object(publicEnv)
