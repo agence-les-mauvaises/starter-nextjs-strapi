@@ -1,5 +1,13 @@
+const check = process.env.BUILD_CHECK === 'true'
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+    eslint: {
+      ignoreDuringBuilds: !check,
+    },
+    typescript: {
+      ignoreBuildErrors: !check,
+    },
     images: {
       remotePatterns: [{ hostname: process.env.IMAGE_HOSTNAME || new URL(process.env.NEXT_PUBLIC_API_URL).hostname }],
     },

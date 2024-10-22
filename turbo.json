@@ -1,18 +1,26 @@
 {
     "ui": "tui",
     "$schema": "https://turbo.build/schema.json",
+    "globalDependencies": ["./.env", "**/.env.*local", "**/.env", "./.env.local"],
+    "globalPassThroughEnv": [".env.local", ".env"],
+    "globalEnv": ["NEXT_PUBLIC_API_URL", "NEXT_PUBLIC_APP_URL","NEXT_PUBLIC_API_PORT", "NEXT_PUBLIC_APP_PORT", "JWT_SECRET"],
     "tasks": {
         "setup": {
             "dependsOn": ["seed"]
         },
       "build": {
         "dependsOn": ["^build"],
-        "outputs": [".next/**", "!.next/cache/**"]
+        "outputs": [".next/**", "!.next/cache/**", "dist/**"]
       },
       "check-types": {
         "dependsOn": ["^check-types"]
       },
       "dev": {
+        "persistent": true,
+        "cache": false
+      },
+      "start": {
+        "dependsOn": ["^start"],
         "persistent": true,
         "cache": false
       },

@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "wait-port 1337 && next dev",
+    "dev": "@ && next dev -p {NEXT_PUBLIC_APP_PORT}\"",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"
@@ -45,6 +45,7 @@
     "wait-port": "^1.1.0"
   },
   "devDependencies": {
+    "@n0safe/envcli": "^1.0.1",
     "@types/negotiator": "^0.6.3",
     "@types/node": "^20",
     "@types/react": "^18",

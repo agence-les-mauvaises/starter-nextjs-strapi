@@ -1,27 +1,33 @@
 {
-  "private": true,
-  "name": "starter-nextjs-strapi",
-  "version": "1.0.0",
-  "main": "index.js",
-  "repository": "git@github.com:agence-les-mauvaises/starter-nextjs-strapi.git",
-  "author": "les-mauvaises <contact@les-mauvaises.fr>",
-  "license": "MIT",
-  "workspaces": [
-    "next",
-    "strapi"
-  ],
-  "scripts": {
-    "dev": "npx turbo dev",
-    "setup": "cd strapi && npx turbo setup && npx turbo build",
-    "build": "npx turbo build",
-    "start": "npx turbo start"
-  },
-  "dependencies": {
-    "concurrently": "^9.0.1",
-    "wait-port": "^1.1.0"
-  },
-  "devDependencies": {
-    "turbo": "^2.1.3"
-  },
-  "packageManager": "yarn@1.22.22"
+    "private": true,
+    "name": "starter-nextjs-strapi",
+    "version": "1.0.0",
+    "main": "index.js",
+    "repository": "git@github.com:agence-les-mauvaises/starter-nextjs-strapi.git",
+    "author": "les-mauvaises <contact@les-mauvaises.fr>",
+    "license": "MIT",
+    "workspaces": [
+        "next",
+        "strapi"
+    ],
+    "scripts": {
+        "dev": "dotenv -e .env -- npx turbo dev",
+        "setup": "node init.js && dotenv -e .env -- npx turbo setup && dotenv -e .env -- npx turbo build",
+        "build": "dotenv -e .env -- npm run build -w strapi && run-until \"npm run start -w strapi\" \"wait-port 1337 && dotenv -e .env -- npx turbo build --filter=!strapi\"",
+        "start": "dotenv -e .env -- npx turbo start"
+    },
+    "dependencies": {
+        "concurrently": "^9.0.1",
+        "dotenv-cli": "^7.4.2",
+        "wait-port": "^1.1.0"
+    },
+    "devDependencies": {
+        "@n0safe/envcli": "^1.0.1",
+        "@n0safe/rununtil": "^1.0.2",
+        "envfile": "^7.1.0",
+        "prompts": "^2.4.2",
+        "random-hash": "^4.0.1",
+        "turbo": "^2.2.3"
+    },
+    "packageManager": "npm@10.7.0"
 }
