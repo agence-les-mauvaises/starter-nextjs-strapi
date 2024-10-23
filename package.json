@@ -13,7 +13,7 @@
     "scripts": {
         "dev": "dotenv -e .env -- npx turbo dev",
         "setup": "node init.js && dotenv -e .env -- npx turbo setup && dotenv -e .env -- npx turbo build",
-        "build": "dotenv -e .env -- npm run build -w strapi && run-until \"npm run start -w strapi\" \"wait-port 1337 && dotenv -e .env -- npx turbo build --filter=!strapi\"",
+        "build": "dotenv -e .env -- npm run build -w strapi && run-until \"dotenv -e .env -- npm run start -w strapi\" \"env-cli wait-port {NEXT_PUBLIC_API_PORT} && dotenv -e .env -- npx turbo build --filter=!strapi\"",
         "start": "dotenv -e .env -- npx turbo start"
     },
     "dependencies": {

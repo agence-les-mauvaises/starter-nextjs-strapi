@@ -1,7 +1,7 @@
 import { Metadata } from 'next';
 
 import PageContent from '@/lib/shared/PageContent';
-import fetchContentType from '@/lib/strapi/fetchContentType';
+import fetchContentType, { ensureIsSingle } from '@/lib/strapi/fetchContentType';
 import { generateMetadataObject } from '@/lib/shared/metadata';
 
 export async function generateMetadata({
@@ -9,11 +9,11 @@ export async function generateMetadata({
 }: {
   params: { locale: string; slug: string };
 }): Promise<Metadata> {
-  const pageData = await fetchContentType<any>(
+  const pageData = ensureIsSingle(await fetchContentType(
     'pages',
     `filters[slug][$eq]=${params.slug}&filters[locale][$eq]=${params.locale}&populate=seo.metaImage`,
     true
-  );
+  ));
 
   const seo = pageData?.seo;
   const metadata = generateMetadataObject(seo);
