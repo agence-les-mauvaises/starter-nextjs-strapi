@@ -6,7 +6,6 @@ import { ViewTransitions } from "next-view-transitions";
 import { CartProvider } from "@/context/cart-context";
 import { cn } from "@/lib/utils";
 import { Inter } from "next/font/google";
-import fetchContentType from "@/lib/strapi/fetchContentType";
 import { generateMetadataObject } from "@/lib/shared/metadata";
 
 export const viewport: Viewport = {
@@ -50,7 +49,7 @@ export default function RootLayout({
                     <body
                         className={cn(
                             inter.className,
-                            "bg-charcoal antialiased min-h-screen h-0 w-full"
+                            "bg-charcoal antialiased min-h-screen h-0 w-full flex flex-col justify-between"
                         )}
                     >
                         {children}

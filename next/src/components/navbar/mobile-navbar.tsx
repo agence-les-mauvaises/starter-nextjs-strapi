@@ -22,9 +22,10 @@ type Props = {
   }[];
   logo: any;
   locale: string
+  name?: string
 };
 
-export const MobileNavbar = ({ leftNavbarItems, rightNavbarItems, logo, locale }: Props) => {
+export const MobileNavbar = ({ leftNavbarItems, rightNavbarItems, logo, locale, name }: Props) => {
   const [open, setOpen] = useState(false);
 
   const { scrollY } = useScroll();
@@ -47,7 +48,7 @@ export const MobileNavbar = ({ leftNavbarItems, rightNavbarItems, logo, locale }
         " bg-neutral-900  shadow-[0px_-2px_0px_0px_var(--neutral-800),0px_2px_0px_0px_var(--neutral-800)]"
       )}
     >
-      <Logo image={logo?.image} />
+      <Logo image={logo?.image} name={name} />
 
       <IoIosMenu
         className="text-white h-6 w-6"
